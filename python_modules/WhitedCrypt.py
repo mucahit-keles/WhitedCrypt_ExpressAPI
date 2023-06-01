@@ -1,8 +1,6 @@
 import sys
 import hashlib as HashKutuphanesi
 
-HashKutuphanesi.sha3_512
-
 HashlemeAlgoritmalari = {"md5": HashKutuphanesi.md5, "sha1": HashKutuphanesi.sha1, "sha224": HashKutuphanesi.sha224, "sha256": HashKutuphanesi.sha256, "sha384": HashKutuphanesi.sha384, "sha512": HashKutuphanesi.sha512, "sha3_224": HashKutuphanesi.sha3_224, "sha3_256": HashKutuphanesi.sha3_256, "sha3_384": HashKutuphanesi.sha3_384, "sha3_512": HashKutuphanesi.sha3_512}
 GecerliMaskelemeMetodlari = {1, 2, 3}
 
