@@ -14,8 +14,9 @@ Router.post("/", async (req, res) => {
 				if (Sonuc.substring(0, 6) === "[HATA]") {
 					HataOlustu = true;
 					OzelHata = true;
+					Sonuc = Sonuc.substring(!OzelHata && 0 || 7, Sonuc.length);
 				}
-				return Sonuc.replace(new RegExp("\\n", "gi"), "").substring(!OzelHata && 0 || 7, Sonuc.length - 1);
+				return Sonuc.replace(new RegExp("\\n", "gi"), "");
 			})
 			.catch(Hata => {
 				console.error(" ------------------ \n| Bir hata oluştu! |\n ------------------ \n", Hata);
