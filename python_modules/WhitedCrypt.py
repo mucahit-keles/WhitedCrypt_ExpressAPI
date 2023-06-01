@@ -51,9 +51,9 @@ def KodlamayiCoz(KodlanmisYazi: str, SifrelemeCozmekIcin: bool = False):
 		return SifrelemeCozmekIcin == True and "[HATA] Geçersiz bir şifre girdiniz." or "[HATA] Maskeleme bozuk."
 
 def Sifrele(HashlemeAlgoritmasiAdi: str, Maskeli: bool, MaskelemeMetodu: int, DuzYazi: str, Anahtar: str):
-	HashlemeAlgoritmasi = HashlemeAlgoritmalari[HashlemeAlgoritmasiAdi.lower()]
-	if HashlemeAlgoritmasi:
-		if MaskelemeMetodu in GecerliMaskelemeMetodlari:
+	if HashlemeAlgoritmasiAdi in HashlemeAlgoritmalari:
+		HashlemeAlgoritmasi = HashlemeAlgoritmalari[HashlemeAlgoritmasiAdi.lower()]
+		if Maskeli == False or MaskelemeMetodu in GecerliMaskelemeMetodlari:
 			HashliAnahtar = HashlemeAlgoritmasi(Anahtar.encode()).hexdigest()
 			KodlanmisHashliAnahtar = Kodla(2, HashliAnahtar) # İlk parametrenin 2 olmasının sebebi sayılarla maskeleme yapmak istememiz
 			KodlanmisYazi = Kodla(2, DuzYazi) # İlk parametrenin 2 olmasının sebebi sayılarla maskeleme yapmak istememiz
@@ -91,7 +91,7 @@ if len(Parametreler) > 1:
 		print(KodlamayiCoz(KodlanmisYazi))
 	elif Operasyon == "sifrele":
 		HashlemeAlgoritmasiAdi = Parametreler[2]
-		Maskeli = bool(Parametreler[3])
+		Maskeli = Parametreler[3].lower() == "true"
 		MaskelemeMetodu = int(Parametreler[4])
 		DuzYazi = Parametreler[5]
 		Anahtar = Parametreler[6]

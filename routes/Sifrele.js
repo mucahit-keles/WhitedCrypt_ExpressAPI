@@ -4,20 +4,26 @@ const WhitedCrypt = require("../services/WhitedCrypt");
 
 Router.use(Express.json());
 
-Router.post("/", async function(req, res) {
+Router.post("/", async (req, res) => {
 	try {
+		let HataOlustu = false;
+		let OzelHata = false;
 		const IstekArgumanlari = req.body;
-		const SifrelenmisYazi = await WhitedCrypt.Sifrele(IstekArgumanlari.HashlemeAlgoritmasiAdi, IstekArgumanlari.Maskeli, IstekArgumanlari.MaskelemeMetodu, IstekArgumanlari.DuzYazi, IstekArgumanlari.Anahtar)
+		const SifrelenmisYazi = await WhitedCrypt.Sifrele(IstekArgumanlari.HashlemeAlgoritmasiAdi, String(IstekArgumanlari.Maskeli), String(IstekArgumanlari.MaskelemeMetodu), IstekArgumanlari.DuzYazi, IstekArgumanlari.Anahtar)
 			.then(Sonuc => {
-				return Sonuc.replace(new RegExp("\\n", "gi"), "");
+				if (Sonuc.substring(0, 6) === "[HATA]") {
+					HataOlustu = true;
+					OzelHata = true;
+				}
+				return Sonuc.replace(new RegExp("\\n", "gi"), "").substring(!OzelHata && 0 || 7, Sonuc.length - 1);
 			})
 			.catch(Hata => {
-				console.error("Bir hata oluştu:", Hata.message);
+				console.error(" ------------------ \n| Bir hata oluştu! |\n ------------------ \n", Hata);
+				HataOlustu = true;
 			})
-			res.status(200).json({ sonuc: SifrelenmisYazi });
+		res.status(!HataOlustu && 200 || (OzelHata && 400 || 500)).json({ Basarili: !HataOlustu, Sonuc: (!HataOlustu || OzelHata) && SifrelenmisYazi || "" });
 	} catch(Hata) {
-		console.error("Bir hata oluştu ", Hata.message);
-		next(Hata);
+		console.error(" ------------------ \n| Bir hata oluştu! |\n ------------------ \n", Hata);
 	}
 });
 
