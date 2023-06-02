@@ -14,5 +14,5 @@ Uygulama.use("/sifrele", Sifrele_Router);
 Uygulama.use("/sifrelemeyicoz", SifrelemeyiCoz_Router);
 
 Uygulama.listen(3000, () => {
-	console.log("Server started on port 3000");
+	console.log("Sunucu port 3000'de başlatıldı");
 });
