@@ -14,7 +14,7 @@ Router.post("/", async (req, res) => {
 				if (Sonuc.substring(0, 6) === "[HATA]") {
 					HataOlustu = true;
 					OzelHata = true;
-					Sonuc = Sonuc.substring(!OzelHata && 0 || 7, Sonuc.length);
+					Sonuc = Sonuc.substring(7, Sonuc.length);
 				}
 				return Sonuc.replace(new RegExp("\\n", "gi"), "");
 			})
